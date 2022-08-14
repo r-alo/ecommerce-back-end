@@ -2,15 +2,18 @@ const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
-
 router.get('/', async (req, res) => {
-  const categories = await Category.findAll({});
+  const categories = await Category.findAll({
+    include: Product
+  });
   res.json(categories);
 });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const categorySearch = await Category.findByPk(id);
+  const categorySearch = await Category.findByPk(id, {
+    include: Product
+  });
   res.json(categorySearch);
 
 });
@@ -25,7 +28,9 @@ router.post('/', async (req, res) => {
 // update a category by its `id` value
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const categorySearch = await Category.findByPk(id);
+  const categorySearch = await Category.findByPk(id, {
+    include: Product
+  });
   const updateCategory = await categorySearch.update(req.body);
   res.json(updateCategory);
   
