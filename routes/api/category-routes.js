@@ -22,7 +22,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const newCategory = await Category.create(req.body)
   res.json(newCategory);
-
 });
 
 // update a category by its `id` value
